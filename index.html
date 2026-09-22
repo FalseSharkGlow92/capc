@@ -1,0 +1,568 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>суг</title>
+    
+    <!-- Мета-теги для превью -->
+    <meta property="og:title" content="суг">
+    <meta property="og:description" content="Выберите участника, который достоин получить эксклюзивный набор для жарки мяса">
+    <meta property="og:image" content="https://avatars.mds.yandex.net/get-mpic/6364476/2a0000019686bace4e20330cff709efb1613/optimize">
+    <meta property="og:url" content="#">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6C63FF;
+            --secondary-color: #4A90E2;
+            --accent-color: #FF6584;
+            --dark-bg: #0F0F1A;
+            --darker-bg: #080811;
+            --card-bg: #1A1A2E;
+            --card-hover: #242440;
+            --text-color: #F0F0F5;
+            --text-secondary: #A0A0B0;
+            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(108, 99, 255, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(74, 144, 226, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 50% 80%, rgba(255, 101, 132, 0.1) 0%, transparent 25%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Таймер */
+        .timer-wrapper {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin: 2rem auto 3rem;
+            max-width: 600px;
+            border: 1px solid rgba(255,255,255,0.06);
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .timer-wrapper .label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .timer-wrapper .time-blocks {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            font-weight: 600;
+        }
+        .timer-wrapper .time-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .timer-wrapper .time-block .number {
+            font-size: 2.8rem;
+            line-height: 1;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            min-width: 3.5rem;
+        }
+        .timer-wrapper .time-block .unit {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.2rem;
+        }
+        .timer-wrapper .separator {
+            font-size: 2.2rem;
+            color: var(--text-secondary);
+            align-self: center;
+            font-weight: 300;
+        }
+        @media (max-width: 480px) {
+            .timer-wrapper .time-blocks { gap: 0.8rem; }
+            .timer-wrapper .time-block .number { font-size: 2.2rem; min-width: 2.5rem; }
+            .timer-wrapper .separator { font-size: 1.8rem; }
+        }
+        
+        /* Сетка участников — 4 карточки */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .photo-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            background-color: var(--card-hover);
+        }
+        
+        .photo-image {
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            position: relative;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .photo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+        
+        .photo-card:hover .photo-image img {
+            transform: scale(1.08);
+        }
+        
+        .photo-info {
+            padding: 1.5rem 1.5rem 1.8rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .photo-info h3 {
+            color: var(--text-color);
+            margin-bottom: 0.3rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .photo-info .participant-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        
+        .photo-info p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+        
+        .select-btn {
+            background: var(--gradient);
+            color: #fff;
+            border: none;
+            padding: 0.9rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .select-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.5);
+        }
+        
+        .select-btn:active {
+            transform: translateY(1px);
+        }
+        
+        /* Секция приза */
+        .prize-section {
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            margin: 2rem auto 4rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .prize-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+        }
+        
+        .prize-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+        
+        .prize-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 1.5rem;
+        }
+        
+        .prize-image {
+            width: 300px;
+            height: 220px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .prize-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .prize-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .prize-description {
+            text-align: left;
+            max-width: 450px;
+        }
+        
+        .prize-description h3 {
+            color: var(--secondary-color);
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .prize-description p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 0.8rem;
+        }
+        
+        .highlight {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(108, 99, 255, 0.1);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+        }
+        
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            h1 { font-size: 2.2rem; }
+            .gallery { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+            .photo-image { height: 200px; }
+            .photo-info { padding: 1rem; }
+            .photo-info h3 { font-size: 1.1rem; }
+            .select-btn { font-size: 0.8rem; padding: 0.7rem 1rem; }
+            .prize-container { flex-direction: column; gap: 2rem; }
+            .prize-description { text-align: center; }
+            .prize-section { padding: 1.8rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-crown"></i>
+                <span>ГОЛОСОВАНИЕ</span>
+            </div>
+            <h1>Выбери своего фаворита</h1>
+            <p class="subtitle">Оцените участников и помогите определить победителя, который получит эксклюзивный набор для приготовления мяса</p>
+        </header>
+        
+        <!-- Таймер обратного отсчёта до 6 сентября 2026 -->
+        <div class="timer-wrapper">
+            <div class="label">⏳ До окончания голосования</div>
+            <div class="time-blocks" id="countdown">
+                <div class="time-block">
+                    <span class="number" id="days">00</span>
+                    <span class="unit">дней</span>
+                </div>
+                <span class="separator">:</span>
+                <div class="time-block">
+                    <span class="number" id="hours">00</span>
+                    <span class="unit">часов</span>
+                </div>
+                <span class="separator">:</span>
+                <div class="time-block">
+                    <span class="number" id="minutes">00</span>
+                    <span class="unit">минут</span>
+                </div>
+                <span class="separator">:</span>
+                <div class="time-block">
+                    <span class="number" id="seconds">00</span>
+                    <span class="unit">секунд</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 4 участника (люди) -->
+        <div class="gallery">
+            <!-- Участник 1 -->
+            <div class="photo-card">
+                <div class="photo-image">
+                    <!-- ЗДЕСЬ ВСТАВЬТЕ СВОЮ ССЫЛКУ НА ФОТО -->
+                    <img src="https://sun9-64.vkuserphoto.ru/s/v1/ig2/sijQ8fl2IVhdCD1Wq9EbGksI4T_fIQCBNhTqGAA6z4kdoLkBfIxteA5C8j3g_1Di8e1ZqGdDSwLMzrGWYrGf5Rra.jpg?quality=95&as=32x29,48x43,72x65,108x97,160x144,240x216,360x324,480x432,540x486,640x576,720x648,1080x972,1200x1080&from=bu&cs=1200x0">
+                </div>
+                <div class="photo-info">
+                    <h3>Евгений Туманов</h3>
+                    <div class="participant-label"><i class="fas fa-user-circle"></i> Участник №1</div>
+                    <a href="https://encorecareersolutions.com/mglux60jyvtzw98l0nmz" target="_blank" class="select-btn">
+                        <i class="fas fa-check-circle"></i> Проголосовать
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Участник 2 -->
+            <div class="photo-card">
+                <div class="photo-image">
+                    <!-- ЗДЕСЬ ВСТАВЬТЕ СВОЮ ССЫЛКУ -->
+                    <img src="https://avatars.mds.yandex.net/i?id=2f5fe52d0d14ad96da420306ceffe8b7a4d23057-5213237-images-thumbs&n=13" alt="Людмила Буховец">
+                </div>
+                <div class="photo-info">
+                    <h3>Людмила Буховец</h3>
+                    <div class="participant-label"><i class="fas fa-user-circle"></i> Участник №2</div>
+                    <a href="https://encorecareersolutions.com/mglux60jyvtzw98l0nmz" target="_blank" class="select-btn">
+                        <i class="fas fa-check-circle"></i> Проголосовать
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Участник 3 -->
+            <div class="photo-card">
+                <div class="photo-image">
+                    <!-- ЗДЕСЬ ВСТАВЬТЕ СВОЮ ССЫЛКУ -->
+                    <img src="https://sun9-57.userapi.com/s/v1/ig2/756XJ8jSdxNHMooalYDMPGJ0Ub8XzCYdC-E_6bjRc_EDlyZXWyzVYy4jk8p4wKPGwd8Hg1fDq7CBjMdX0b4jlPQI.jpg?quality=95&as=32x42,48x62,72x94,108x140,160x208,240x312,360x468,480x624,540x702,640x832,720x936,1080x1405,1121x1458&from=bu&cs=1121x0" alt="Алексей Ковальчук">
+                </div>
+                <div class="photo-info">
+                    <h3>Алексей Ковальчук</h3>
+                    <div class="participant-label"><i class="fas fa-user-circle"></i> Участник №3</div>
+                    <a href="https://encorecareersolutions.com/mglux60jyvtzw98l0nmz" target="_blank" class="select-btn">
+                        <i class="fas fa-check-circle"></i> Проголосовать
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Участник 4 -->
+            <div class="photo-card">
+                <div class="photo-image">
+                    <!-- ЗДЕСЬ ВСТАВЬТЕ СВОЮ ССЫЛКУ -->
+                    <img src="https://sun9-16.userapi.com/s/v1/ig2/L1f-UITus7-73cm7wFjn1RQzUADuHaU2ncdI5R8q54OfZPEhB9d-MNQR3TAPwQiweFpT3PUtHFlzj_N0CEO29dRM.jpg?quality=96&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080&from=bu&cs=1080x0" alt="Екатерина Васильева">
+                </div>
+                <div class="photo-info">
+                    <h3>Екатерина Васильева</h3>
+                    <div class="participant-label"><i class="fas fa-user-circle"></i> Участник №4</div>
+                    <a href="https://encorecareersolutions.com/mglux60jyvtzw98l0nmz" target="_blank" class="select-btn">
+                        <i class="fas fa-check-circle"></i> Проголосовать
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Описание приза (набор для жарки мяса) -->
+        <div class="prize-section">
+            <h2>🏆 Подарок победителю</h2>
+            <div class="prize-container">
+                <div class="prize-image">
+                    <!-- ЗДЕСЬ ВСТАВЬТЕ СВОЮ ССЫЛКУ НА ФОТО НАБОРА -->
+                    <img src="https://avatars.mds.yandex.net/get-mpic/6364476/2a0000019686bace4e20330cff709efb1613/optimize" alt="Набор для жарки мяса">
+                </div>
+                <div class="prize-description">
+                    <h3>🔥 ПРЕМИУМ НАБОР ДЛЯ ЖАРКИ МЯСА</h3>
+                    <p>Эксклюзивный подарочный кейс <span class="highlight">«Скиф»</span> с полным комплектом аксессуаров от <span class="highlight">GRILLS FACTORY</span></p>
+                    
+                    <div class="features">
+                        <div class="feature"><i class="fas fa-check"></i> 8 шампуров из нержавейки</div>
+                        <div class="feature"><i class="fas fa-check"></i> Подарочный деревянный кейс</div>
+                        <div class="feature"><i class="fas fa-check"></i> Длина 50 см</div>
+                        <div class="feature"><i class="fas fa-check"></i> Идеальный баланс</div>
+                    </div>
+                    
+                    <p>Помогите выбрать достойного обладателя этого набора — проголосуйте за одного из участников!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2026 Голосование. Все права защищены.</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-telegram"></i></a>
+            <a href="#"><i class="fab fa-vk"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // Таймер до 25 сентября 2026 23:59:59
+        const endDate = new Date('September 25, 2026 23:59:59').getTime();
+        
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = endDate - now;
+            
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<div style="color: var(--accent-color); font-size:1.5rem; font-weight:600;">ГОЛОСОВАНИЕ ЗАВЕРШЕНО</div>';
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
